@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Se necesita permiso de reconocimiento de voz</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>se necesita permiso de microfono</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Se necesita acceso a foto</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>

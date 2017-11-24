@@ -12,6 +12,8 @@
 		41D335661FC7BD9300EF41F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41D335641FC7BD9300EF41F1 /* Main.storyboard */; };
 		41D335681FC7BD9300EF41F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41D335671FC7BD9300EF41F1 /* Assets.xcassets */; };
 		41D3356B1FC7BD9300EF41F1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41D335691FC7BD9300EF41F1 /* LaunchScreen.storyboard */; };
+		41D335731FC7D02200EF41F1 /* ImgCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D335721FC7D02200EF41F1 /* ImgCollectionViewController.swift */; };
+		41D335751FC7D0D400EF41F1 /* imgCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D335741FC7D0D400EF41F1 /* imgCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		41D335671FC7BD9300EF41F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		41D3356A1FC7BD9300EF41F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		41D3356C1FC7BD9300EF41F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		41D335721FC7D02200EF41F1 /* ImgCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImgCollectionViewController.swift; sourceTree = "<group>"; };
+		41D335741FC7D0D400EF41F1 /* imgCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imgCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,8 @@
 				41D335671FC7BD9300EF41F1 /* Assets.xcassets */,
 				41D335691FC7BD9300EF41F1 /* LaunchScreen.storyboard */,
 				41D3356C1FC7BD9300EF41F1 /* Info.plist */,
+				41D335721FC7D02200EF41F1 /* ImgCollectionViewController.swift */,
+				41D335741FC7D0D400EF41F1 /* imgCollectionViewCell.swift */,
 			);
 			path = GloryDays;
 			sourceTree = "<group>";
@@ -136,7 +142,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41D335731FC7D02200EF41F1 /* ImgCollectionViewController.swift in Sources */,
 				41D335631FC7BD9300EF41F1 /* ViewController.swift in Sources */,
+				41D335751FC7D0D400EF41F1 /* imgCollectionViewCell.swift in Sources */,
 				41D335611FC7BD9300EF41F1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
