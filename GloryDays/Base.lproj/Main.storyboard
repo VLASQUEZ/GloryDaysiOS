@@ -87,17 +87,18 @@
                                     <rect key="frame" x="0.0" y="0.0" width="180" height="150"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tHr-Tp-7EL">
-                                            <rect key="frame" x="0.0" y="0.0" width="180" height="150"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tHr-Tp-7EL">
+                                            <rect key="frame" x="10" y="10" width="160" height="130"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                     </subviews>
                                 </view>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="tHr-Tp-7EL" secondAttribute="bottom" id="0Vg-mv-uTY"/>
-                                    <constraint firstAttribute="trailing" secondItem="tHr-Tp-7EL" secondAttribute="trailing" id="HKo-Fi-dMM"/>
-                                    <constraint firstItem="tHr-Tp-7EL" firstAttribute="leading" secondItem="ma4-VO-3gX" secondAttribute="leading" id="bQ3-U9-pjf"/>
-                                    <constraint firstItem="tHr-Tp-7EL" firstAttribute="top" secondItem="ma4-VO-3gX" secondAttribute="top" id="dPk-wW-gVL"/>
+                                    <constraint firstAttribute="top" secondItem="sFh-ES-SRI" secondAttribute="top" constant="-10" id="BGq-Kp-WU8"/>
+                                    <constraint firstAttribute="bottom" secondItem="zNH-Ri-G49" secondAttribute="bottom" constant="-403" id="sDo-C2-Y9K"/>
+                                    <constraint firstItem="zNH-Ri-G49" firstAttribute="leading" secondItem="ma4-VO-3gX" secondAttribute="leading" constant="10" id="uP6-xU-asw"/>
                                 </constraints>
+                                <size key="customSize" width="180" height="150"/>
                                 <connections>
                                     <outlet property="imageView" destination="tHr-Tp-7EL" id="wk3-oB-inB"/>
                                 </connections>
