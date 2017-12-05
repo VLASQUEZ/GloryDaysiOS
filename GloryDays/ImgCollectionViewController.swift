@@ -10,17 +10,21 @@ import UIKit
 import AVFoundation
 import Photos
 import Speech
+import CoreSpotlight
+import MobileCoreServices
 
 private let reuseIdentifier = "imgCell"
 
-class ImgCollectionViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate,AVAudioRecorderDelegate {
+class ImgCollectionViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate,AVAudioRecorderDelegate,UISearchBarDelegate {
     var memories : [URL] = []
+    var filteredMemories : [URL] = []
     var currentMemory : URL!
     
     
     var audioRecorder : AVAudioRecorder?
     var audioPlayer : AVAudioPlayer?
     var recordingURL : URL!
+    var searchQuery : CSSearchQuery?
     override func viewDidLoad() {
         super.viewDidLoad()
         self.recordingURL = try? getDocumentsDirectory().appendingPathComponent("memory-recording.m4a")
@@ -71,6 +75,7 @@ class ImgCollectionViewController: UICollectionViewController, UIImagePickerCont
                 }
             }
         }
+        filteredMemories = memories
         collectionView?.reloadSections(IndexSet(integer:1))
         
     }
@@ -172,14 +177,14 @@ class ImgCollectionViewController: UICollectionViewController, UIImagePickerCont
         }
         else
         {
-            return self.memories.count
+            return self.filteredMemories.count
         }
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! imgCollectionViewCell
     
-        let memory = self.memories[indexPath.row]
+        let memory = self.filteredMemories[indexPath.row]
         let memoryName = self.thumbnailURL(for: memory).path
         let image = UIImage(contentsOfFile: memoryName)
         cell.imageView.image = image
@@ -201,7 +206,7 @@ class ImgCollectionViewController: UICollectionViewController, UIImagePickerCont
         if sender.state == .began{
             let cell = sender.view as! imgCollectionViewCell
             if let index = collectionView?.indexPath(for: cell){
-                self.currentMemory = self.memories[index.row]
+                self.currentMemory = self.filteredMemories[index.row]
                 self.startRecordingMemory()
             }
         }
@@ -274,12 +279,32 @@ class ImgCollectionViewController: UICollectionViewController, UIImagePickerCont
                 
                 do{
                     try text.write(to: transcription, atomically: true, encoding: String.Encoding.utf8)
+                    self.indexMemory(memory : memory,text : text)
                 }catch{
                     print("Ha ocurrido un error de transcripción")
                 }
             }
             
         })
+    }
+    
+    func indexMemory(memory:URL, text: String){
+        let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeText as String)
+        attributeSet.title = "Recuerdo de mis glory days"
+        attributeSet.contentDescription = text
+        attributeSet.thumbnailURL = thumbnailURL(for: memory)
+        
+        let item = CSSearchableItem(uniqueIdentifier: memory.path, domainIdentifier: "com.vlasquez", attributeSet: attributeSet)
+        item.expirationDate = Date.distantFuture
+        
+        CSSearchableIndex.default().indexSearchableItems([item]) { (error) in
+            if let error = error {
+                print("Ocurrió un error al indexar")
+            }
+            else{
+                
+            }
+        }
     }
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "imgHeader", for: indexPath)
@@ -295,7 +320,7 @@ class ImgCollectionViewController: UICollectionViewController, UIImagePickerCont
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let memory = self.memories[indexPath.row]
+        let memory = self.filteredMemories[indexPath.row]
         let fileManager = FileManager.default
         do{
             let audioName = audioURL(for: memory)
@@ -313,6 +338,49 @@ class ImgCollectionViewController: UICollectionViewController, UIImagePickerCont
         catch{
             print("Error al reproducir el archivo")
         }
+    }
+    func filterMemories (text: String){
+        guard text.count > 0 else {
+            self.filteredMemories = self.memories
+            UIView.performWithoutAnimation {
+                collectionView?.reloadSections(IndexSet(integer : 1))
+            }
+        return
+        }
+        
+        
+        var allItems : [CSSearchableItem] = []
+        searchQuery?.cancel()
+        
+        let queryStr = "contentDescription == \"*\(text)*\"c"
+        self.searchQuery = CSSearchQuery(queryString: queryStr, attributes: nil)
+        self.searchQuery?.foundItemsHandler = { (items : [CSSearchableItem])-> Void in
+            allItems.append(contentsOf: items)
+        }
+        self.searchQuery?.completionHandler = {
+            (error)->Void in
+            DispatchQueue.main.async {
+                [unowned self] in
+                self.activateFilter (matches: allItems)
+            }
+        }
+        self.searchQuery?.start()
+    }
+    func activateFilter (matches: [CSSearchableItem]){
+        self.filteredMemories = matches.map({ (item) in
+            let id = item.uniqueIdentifier
+            let url : URL = URL(fileURLWithPath: id)
+            return url
+        })
+        UIView.performWithoutAnimation {
+            collectionView?.reloadSections(IndexSet(integer : 1))
+        }
+    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        self.filterMemories(text: searchText)
+    }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
     // MARK: UICollectionViewDelegate
 

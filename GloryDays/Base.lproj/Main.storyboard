@@ -94,7 +94,6 @@
                                     </subviews>
                                 </view>
                                 <constraints>
-                                    <constraint firstAttribute="top" secondItem="sFh-ES-SRI" secondAttribute="top" constant="-10" id="BGq-Kp-WU8"/>
                                     <constraint firstAttribute="bottom" secondItem="zNH-Ri-G49" secondAttribute="bottom" constant="-403" id="sDo-C2-Y9K"/>
                                     <constraint firstItem="zNH-Ri-G49" firstAttribute="leading" secondItem="ma4-VO-3gX" secondAttribute="leading" constant="10" id="uP6-xU-asw"/>
                                 </constraints>
